@@ -14,7 +14,6 @@ chirp is a proximity-based anonymous social media platform that enables users to
 
 - Flutter SDK
 - Android Studio or Xcode
-- Google Maps API key
 
 ### Installation
 
