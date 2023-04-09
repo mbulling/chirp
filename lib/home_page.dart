@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'message_view.dart';
 import 'shared_structs.dart';
+import 'common.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,10 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _locationText = '';
   String _locationName = '';
+  List<Message> _messages = [];
 
   @override
   void initState() {
     super.initState();
+    _getMessages();
     _getLocation();
   }
 
@@ -32,6 +35,19 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       setState(() {
         _locationText = 'Error: ${e.toString()}';
+      });
+    }
+  }
+
+  Future<void> _getMessages() async {
+    try {
+      List<Message> messages = await getMessages();
+      setState(() {
+        _messages = messages;
+      });
+    } catch (e) {
+      setState(() {
+        _messages = [];
       });
     }
   }
@@ -65,13 +81,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Color.fromARGB(255, 19, 64, 100),
         ),
         body: Center(
-          child: MessageView(messages: [
-            Message(
-                author: "mason",
-                time: "now",
-                content: "bark",
-                zone: Zone(location: "north campus"))
-          ]),
+          child: MessageView(messages: _messages),
         ),
         backgroundColor: Color(0xFFe5eaee));
   }
