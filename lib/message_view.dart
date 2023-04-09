@@ -12,10 +12,18 @@ class MessageView extends StatefulWidget {
 
 class _MessageViewState extends State<MessageView> {
   List<Message> messages = [
-    Message(id: "", author: "me", time: "now", content: "hello world"),
-    Message(id: "", author: "me", time: "now", content: "goodbye world"),
-    Message(id: "", author: "me", time: "now", content: "chirp"),
-    Message(id: "", author: "mason", time: "now", content: "bark")
+    Message(
+        author: "me",
+        time: "now",
+        content: "hello world",
+        zone: "north campus"),
+    Message(
+        author: "me",
+        time: "now",
+        content: "goodbye world",
+        zone: "north campus"),
+    Message(author: "me", time: "now", content: "chirp", zone: "north campus"),
+    Message(author: "mason", time: "now", content: "bark", zone: "north campus")
   ];
 
   @override

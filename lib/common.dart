@@ -2,6 +2,7 @@ import 'package:chirp/firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'shared_structs.dart';
 
 Future<void> initializeFirebase() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,17 +26,27 @@ Future<List<Message>> getMessages() async {
   return messages;
 }
 
-@immutable
-class Message {
-  Message({required this.message, required this.zone});
 
-  Message.fromJson(Map<String, Object?> json)
-      : this(message: json["message"] as String, zone: json["zone"] as String);
+// class Message {
+//   Message(
+//       {required this.content,
+//       required this.zone,
+//       required this.author,
+//       required this.time});
 
-  final String message;
-  final String zone;
+//   Message.fromJson(Map<String, Object?> json)
+//       : this(
+//             content: json["content"] as String,
+//             zone: json["zone"] as String,
+//             author: json["author"] as String,
+//             time: json["time"] as String);
 
-  Map<String, Object?> toJson() {
-    return {'message': message, 'zone': zone};
-  }
-}
+//   final String content;
+//   final String zone;
+//   final String author;
+//   final String time;
+
+//   Map<String, Object?> toJson() {
+//     return {'message': content, 'zone': zone, 'author': author, 'time': time};
+//   }
+// }

@@ -66,7 +66,11 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Center(
           child: MessageView(messages: [
-            Message(id: "", author: "me", time: "now", content: "s")
+            Message(
+                author: "mason",
+                time: "now",
+                content: "bark",
+                zone: "north campus")
           ]),
         ),
         backgroundColor: Color(0xFFe5eaee));
