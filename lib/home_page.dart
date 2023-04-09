@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _locationText = '';
+  String _locationName = '';
 
   @override
   void initState() {
@@ -23,6 +25,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _locationText =
             'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
+        _getLocationName();
       });
     } catch (e) {
       setState(() {
@@ -31,19 +34,43 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> _getLocationName() async {
+    try {
+      final Position position = await _determinePosition();
+      final List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      print(placemarks);
+      setState(() {
+        if (placemarks.isNotEmpty) {
+          final Placemark placemark = placemarks[0];
+          _locationName =
+              placemark.subLocality ?? placemark.locality ?? 'unknown1';
+          _locationName = _locationName.toLowerCase();
+        } else {
+          _locationName = 'unknown2';
+        }
+      });
+    } catch (e) {
+      setState(() {
+        _locationName = 'Error: ${e.toString()}';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('home'),
+        title: Text(_locationName),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),
       ),
       body: Center(
-          child: Text(
-        _locationText,
-        style: TextStyle(fontSize: 20),
-        textAlign: TextAlign.center,
-      )),
+        child: Text(
+          _locationText,
+          style: TextStyle(fontSize: 20),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
