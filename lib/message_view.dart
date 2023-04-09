@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'shared_structs.dart';
+import 'user_profile.dart';
+import 'dart:convert';
 
 class MessageView extends StatefulWidget {
   List<Message> messages;
@@ -36,31 +38,51 @@ class _MessageViewState extends State<MessageView> {
             child: ListView.builder(
               itemCount: widget.messages.length,
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: widget.messages[index].author == 'me'
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Container(
-                      padding: EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: widget.messages[index].author == 'me'
-                            ? Color(
-                                0xFF023258) // Set your sent message background color
-                            : Colors
-                                .grey, // Set your received message background color
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                      child: Text(
-                        widget.messages[index].content,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white, // Set your message text color
+                return Stack(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: messages[index].author == 'me'
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: messages[index].author == 'me'
+                                ? Color(0xFF023258)
+                                : Colors.grey,
+                            borderRadius: BorderRadius.circular(16.0),
+                          ),
+                          child: Text(
+                            messages[index].content,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      left: messages[index].author == 'me' ? null : 0,
+                      right: messages[index].author == 'me' ? 0 : null,
+                      bottom: 7,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: messages[index].author == 'me' ? 0 : 8.0,
+                          right: messages[index].author == 'me' ? 8.0 : 0,
+                        ),
+                        width: 12,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color:
+                              getUserColor(int.parse(messages[index].author)),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
@@ -81,23 +103,23 @@ class _MessageViewState extends State<MessageView> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 16.0),
-                    child: TextFormField(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: TextField(
                       controller: _textController,
                       decoration: InputDecoration(
-                          hintText: "type message", border: InputBorder.none),
+                        hintText: 'Type a message',
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: _sendMessage,
-                  color: Theme.of(context).primaryColor,
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
