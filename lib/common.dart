@@ -19,13 +19,10 @@ final messageRef =
         );
 
 /// Retrieves all messages from 'messages' collection in Firestore
-Future<List<Message>> getMessages() async {
-  List<Message> messages = [];
-  QuerySnapshot<Message> querySnapshot = await messageRef.get();
-  for (QueryDocumentSnapshot<Message> documentSnapshot in querySnapshot.docs) {
-    messages.add(documentSnapshot.data());
-  }
-  return messages;
+Stream<List<Message>> getMessages() {
+  return messageRef.orderBy('time', descending: true).snapshots().map(
+        (querySnapshot) => querySnapshot.docs.map((doc) => doc.data()).toList(),
+      );
 }
 
 /// Adds message to 'messages' collection in Firestore. Requires date/time be
