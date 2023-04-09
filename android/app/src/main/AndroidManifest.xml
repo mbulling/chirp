@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chirp">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
    <application
         android:label="chirp"
         android:name="${applicationName}"
@@ -30,6 +31,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     </application>
 </manifest>
