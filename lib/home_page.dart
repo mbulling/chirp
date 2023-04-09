@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _locationText =
             'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
-        _getLocationName();
+        _getLocationName(position);
       });
     } catch (e) {
       setState(() {
@@ -34,9 +34,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> _getLocationName() async {
+  Future<void> _getLocationName(Position position) async {
     try {
-      final Position position = await _determinePosition();
       final List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       print(placemarks);
