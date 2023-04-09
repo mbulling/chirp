@@ -25,6 +25,17 @@ class _MessageViewState extends State<MessageView> {
     Message(author: "me", time: "now", content: "chirp", zone: "north campus"),
     Message(author: "mason", time: "now", content: "bark", zone: "north campus")
   ];
+  TextEditingController _textController = TextEditingController();
+
+  void _sendMessage() {
+    if (_textController.text.isNotEmpty) {
+      setState(() {
+        messages.add(Message(
+            id: "", author: "me", time: "now", content: _textController.text));
+        _textController.clear();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +76,39 @@ class _MessageViewState extends State<MessageView> {
               },
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
+                    child: TextFormField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                          hintText: "type message", border: InputBorder.none),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: _sendMessage,
+                  color: Theme.of(context).primaryColor,
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
