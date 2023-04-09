@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'home_page.dart';
 import 'user_profile.dart';
+import 'saved_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           body: TabBarView(
             children: [
               HomePage(), // replace this line with HomePage widget from home_page.dart
-              Center(child: Text('page to show saved chats or saved regions?')),
+              SavedRegionsPage(),
               UserProfilePage(userName: 'anonymous'),
             ],
           ),
