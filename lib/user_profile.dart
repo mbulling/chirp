@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
-class UserProfilePage extends StatefulWidget {
-  final String userName;
+Color getUserColor(int userIdentity) {
+  // Generate a color based on the user identity
+  int colorValue = userIdentity.hashCode % (0xFFFFFF + 1);
+  return Color(colorValue).withOpacity(1.0);
+}
 
-  UserProfilePage({Key? key, required this.userName}) : super(key: key);
+class UserProfilePage extends StatefulWidget {
+  final int userIdentity;
+
+  UserProfilePage({Key? key, required this.userIdentity}) : super(key: key);
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
@@ -30,11 +36,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text(
-              widget.userName,
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: getUserColor(widget.userIdentity),
               ),
             ),
           ),
