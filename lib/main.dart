@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'home_page.dart'; // add this line to import home_page.dart
+import 'home_page.dart';
+import 'user_profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,17 +16,11 @@ class MyApp extends StatelessWidget {
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: AppBar(
-            title: Text('chirp'),
-            backgroundColor: Color.fromARGB(255, 19, 64, 100),
-          ),
           body: TabBarView(
             children: [
               HomePage(), // replace this line with HomePage widget from home_page.dart
               Center(child: Text('page to show saved chats or saved regions?')),
-              Center(
-                  child:
-                      Text('page to maybe show the user history like posts')),
+              UserProfilePage(userName: 'anonymous'),
             ],
           ),
           bottomNavigationBar: Container(

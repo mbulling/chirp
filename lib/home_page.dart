@@ -33,12 +33,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('home'),
+        backgroundColor: Color.fromARGB(255, 19, 64, 100),
+      ),
+      body: Center(
+          child: Text(
         _locationText,
         style: TextStyle(fontSize: 20),
         textAlign: TextAlign.center,
-      ),
+      )),
     );
   }
 }
