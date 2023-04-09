@@ -7,11 +7,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'common.dart';
+import 'dart:math';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
   runApp(MyApp());
+}
+
+int generateUserIdentity() {
+  Random random = new Random();
+  return random.nextInt(999999);
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +33,7 @@ class MyApp extends StatelessWidget {
             children: [
               HomePage(), // replace this line with HomePage widget from home_page.dart
               SavedRegionsPage(),
-              UserProfilePage(userName: 'anonymous'),
+              UserProfilePage(userIdentity: generateUserIdentity()),
             ],
           ),
           bottomNavigationBar: Container(

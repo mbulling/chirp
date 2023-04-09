@@ -31,7 +31,10 @@ class _MessageViewState extends State<MessageView> {
     if (_textController.text.isNotEmpty) {
       setState(() {
         messages.add(Message(
-            id: "", author: "me", time: "now", content: _textController.text));
+            author: "me",
+            time: "now",
+            content: _textController.text,
+            zone: "north campus"));
         _textController.clear();
       });
     }
