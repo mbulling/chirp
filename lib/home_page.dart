@@ -15,12 +15,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _locationText = '';
   String _locationName = '';
-  List<Message> _messages = [];
 
   @override
   void initState() {
     super.initState();
-    _getMessages();
     _getLocation();
   }
 
@@ -35,19 +33,6 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       setState(() {
         _locationText = 'Error: ${e.toString()}';
-      });
-    }
-  }
-
-  Future<void> _getMessages() async {
-    try {
-      List<Message> messages = await getMessages();
-      setState(() {
-        _messages = messages;
-      });
-    } catch (e) {
-      setState(() {
-        _messages = [];
       });
     }
   }
@@ -76,14 +61,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(_locationName),
-          backgroundColor: Color.fromARGB(255, 19, 64, 100),
-        ),
-        body: Center(
-          child: MessageView(messages: _messages),
-        ),
-        backgroundColor: Color(0xFFe5eaee));
+      appBar: AppBar(
+        title: Text(_locationName),
+        backgroundColor: Color.fromARGB(255, 19, 64, 100),
+      ),
+      body: StreamBuilder<List<Message>>(
+        stream: getMessages(),
+        builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('Something went wrong'),
+            );
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          List<Message> messages = orderByDate(snapshot.data!);
+
+          return MessageView(messages: messages);
+        },
+      ),
+      backgroundColor: Color(0xFFe5eaee),
+    );
   }
 }
 

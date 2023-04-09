@@ -22,10 +22,10 @@ class _MessageViewState extends State<MessageView> {
         widget.messages.add(Message(
             content: _textController.text,
             author: "123456",
-            time: "now",
+            time: "2023-04-09 05:53:02",
             zone: Zone(location: "north campus")));
         addMessage(_textController.text, Zone(location: "north campus"),
-            "123456", "now");
+            "123456", "2023-04-09 05:53:02");
         _textController.clear();
       });
     }
