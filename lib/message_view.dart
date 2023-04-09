@@ -31,10 +31,10 @@ class _MessageViewState extends State<MessageView> {
     if (_textController.text.isNotEmpty) {
       setState(() {
         messages.add(Message(
-            zone: "north campus",
             author: "me",
             time: "now",
-            content: _textController.text));
+            content: _textController.text,
+            zone: "north campus"));
         _textController.clear();
       });
     }
