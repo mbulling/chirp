@@ -21,7 +21,7 @@ class Message {
 
   Map<String, Object?> toJson() {
     return {
-      'message': content,
+      'content': content,
       'zone': zone.toString(),
       'author': author,
       'time': time
