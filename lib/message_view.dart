@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'shared_structs.dart';
 import 'user_profile.dart';
+import 'common.dart';
 import 'dart:convert';
 
 class MessageView extends StatefulWidget {
@@ -19,10 +20,12 @@ class _MessageViewState extends State<MessageView> {
     if (_textController.text.isNotEmpty) {
       setState(() {
         widget.messages.add(Message(
-            author: "me",
-            time: "now",
             content: _textController.text,
+            author: "123456",
+            time: "now",
             zone: Zone(location: "north campus")));
+        addMessage(_textController.text, Zone(location: "north campus"),
+            "123456", "now");
         _textController.clear();
       });
     }
