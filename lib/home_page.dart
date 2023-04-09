@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
     try {
       final List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      print(placemarks);
       setState(() {
         if (placemarks.isNotEmpty) {
           final Placemark placemark = placemarks[0];
