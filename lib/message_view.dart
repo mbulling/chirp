@@ -4,7 +4,7 @@ import 'user_profile.dart';
 import 'dart:convert';
 
 class MessageView extends StatefulWidget {
-  final List<Message> messages;
+  List<Message> messages;
 
   MessageView({Key? key, required this.messages}) : super(key: key);
 
@@ -13,32 +13,16 @@ class MessageView extends StatefulWidget {
 }
 
 class _MessageViewState extends State<MessageView> {
-  List<Message> messages = [
-    Message(
-        author: "482967",
-        time: "now",
-        content: "hello world",
-        zone: "north campus"),
-    Message(
-        author: "482967",
-        time: "now",
-        content: "goodbye world",
-        zone: "north campus"),
-    Message(
-        author: "111111", time: "now", content: "chirp", zone: "north campus"),
-    Message(
-        author: "222222", time: "now", content: "bark", zone: "north campus")
-  ];
   TextEditingController _textController = TextEditingController();
 
   void _sendMessage() {
     if (_textController.text.isNotEmpty) {
       setState(() {
-        messages.add(Message(
+        widget.messages.add(Message(
             author: "me",
             time: "now",
             content: _textController.text,
-            zone: "north campus"));
+            zone: Zone(location: "north campus")));
         _textController.clear();
       });
     }
@@ -52,7 +36,7 @@ class _MessageViewState extends State<MessageView> {
         children: <Widget>[
           Expanded(
             child: ListView.builder(
-              itemCount: messages.length,
+              itemCount: widget.messages.length,
               itemBuilder: (BuildContext context, int index) {
                 return Stack(
                   children: <Widget>[
