@@ -46,5 +46,6 @@ The region placement algorithm uses the Haversine formula to calculate the great
 
 - Mason Bulling (mcb343@cornell.edu)
 - Andrew Choi (asc269@cornell.edu)
+- Kevin Le (kl626@cornell.edu)
 - Alex Giang (akg72@cornell.edu)
 
