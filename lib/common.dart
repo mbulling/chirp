@@ -25,3 +25,13 @@ Future<List<Message>> getMessages() async {
   }
   return messages;
 }
+
+Future<void> addMessage(
+    String content, String zone, String author, String time) async {
+  try {
+    await messageRef
+        .add(Message(content: content, zone: zone, author: author, time: time));
+  } catch (e) {
+    print(e);
+  }
+}
