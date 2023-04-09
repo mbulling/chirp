@@ -4,7 +4,7 @@ import 'user_profile.dart';
 import 'dart:convert';
 
 class MessageView extends StatefulWidget {
-  List<Message> messages;
+  List<Message> messages = [];
 
   MessageView({Key? key, required this.messages}) : super(key: key);
 
@@ -43,19 +43,19 @@ class _MessageViewState extends State<MessageView> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Align(
-                        alignment: messages[index].author == 'me'
+                        alignment: widget.messages[index].author == 'me'
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
                         child: Container(
                           padding: EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: messages[index].author == 'me'
+                            color: widget.messages[index].author == 'me'
                                 ? Color(0xFF023258)
                                 : Colors.grey,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Text(
-                            messages[index].content,
+                            widget.messages[index].content,
                             style: TextStyle(
                               fontSize: 16.0,
                               color: Colors.white,
@@ -65,20 +65,21 @@ class _MessageViewState extends State<MessageView> {
                       ),
                     ),
                     Positioned(
-                      left: messages[index].author == 'me' ? null : 0,
-                      right: messages[index].author == 'me' ? 0 : null,
+                      left: widget.messages[index].author == 'me' ? null : 0,
+                      right: widget.messages[index].author == 'me' ? 0 : null,
                       bottom: 7,
                       child: Container(
                         margin: EdgeInsets.only(
-                          left: messages[index].author == 'me' ? 0 : 8.0,
-                          right: messages[index].author == 'me' ? 8.0 : 0,
+                          left: widget.messages[index].author == 'me' ? 0 : 8.0,
+                          right:
+                              widget.messages[index].author == 'me' ? 8.0 : 0,
                         ),
                         width: 12,
                         height: 12,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color:
-                              getUserColor(int.parse(messages[index].author)),
+                          color: getUserColor(
+                              int.parse(widget.messages[index].author)),
                         ),
                       ),
                     ),
