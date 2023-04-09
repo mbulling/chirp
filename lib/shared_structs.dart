@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 class Message {
   Message(
       {required this.content,
