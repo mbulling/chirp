@@ -21,6 +21,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFe5eaee),
       appBar: AppBar(
         title: Text('profile'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),

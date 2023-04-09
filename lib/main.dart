@@ -28,13 +28,13 @@ class MyApp extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  color: Colors.grey.shade300,
+                  color: Color(0xFFe5eaee),
                   width: 1,
                 ),
               ),
             ),
             child: TabBar(
-              labelColor: Color.fromARGB(255, 2, 50, 88),
+              labelColor: Color(0xFF023258),
               unselectedLabelColor: Colors.grey,
               tabs: [
                 Tab(
