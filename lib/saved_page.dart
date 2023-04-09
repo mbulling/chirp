@@ -11,6 +11,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFe5eaee),
       appBar: AppBar(
         title: Text('regions'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),

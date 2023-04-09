@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'message_view.dart';
+import 'shared_structs.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -58,18 +60,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_locationName),
-        backgroundColor: Color.fromARGB(255, 19, 64, 100),
-      ),
-      body: Center(
-        child: Text(
-          _locationText,
-          style: TextStyle(fontSize: 20),
-          textAlign: TextAlign.center,
+        appBar: AppBar(
+          title: Text(_locationName),
+          backgroundColor: Color.fromARGB(255, 19, 64, 100),
         ),
-      ),
-    );
+        body: Center(
+          child: MessageView(messages: [
+            Message(id: "", author: "me", time: "now", content: "s")
+          ]),
+        ),
+        backgroundColor: Color(0xFFe5eaee));
   }
 }
 
