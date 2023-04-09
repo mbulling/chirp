@@ -31,7 +31,7 @@ Future<List<Message>> getMessages() async {
 /// Adds message to 'messages' collection in Firestore. Requires date/time be
 /// in the format YYYY-MM-DD HH:MM:SS
 Future<void> addMessage(
-    String content, String zone, String author, String time) async {
+    String content, Zone zone, String author, String time) async {
   try {
     await messageRef
         .add(Message(content: content, zone: zone, author: author, time: time));

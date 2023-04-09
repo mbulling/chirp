@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 author: "mason",
                 time: "now",
                 content: "bark",
-                zone: "north campus")
+                zone: Zone(location: "north campus"))
           ]),
         ),
         backgroundColor: Color(0xFFe5eaee));

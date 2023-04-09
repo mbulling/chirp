@@ -16,14 +16,22 @@ class _MessageViewState extends State<MessageView> {
         author: "me",
         time: "now",
         content: "hello world",
-        zone: "north campus"),
+        zone: Zone(location: "north campus")),
     Message(
         author: "me",
         time: "now",
         content: "goodbye world",
-        zone: "north campus"),
-    Message(author: "me", time: "now", content: "chirp", zone: "north campus"),
-    Message(author: "mason", time: "now", content: "bark", zone: "north campus")
+        zone: Zone(location: "north campus")),
+    Message(
+        author: "me",
+        time: "now",
+        content: "chirp",
+        zone: Zone(location: "north campus")),
+    Message(
+        author: "mason",
+        time: "now",
+        content: "bark",
+        zone: Zone(location: "north campus"))
   ];
   TextEditingController _textController = TextEditingController();
 
@@ -34,7 +42,7 @@ class _MessageViewState extends State<MessageView> {
             author: "me",
             time: "now",
             content: _textController.text,
-            zone: "north campus"));
+            zone: Zone(location: "north campus")));
         _textController.clear();
       });
     }
