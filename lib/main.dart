@@ -76,15 +76,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           body: TabBarView(
             children: [
-              HomePage(
-                  userIdentity: userIdentity,
+              SavedRegionsPage(
                   userPosition: _userPosition,
-                  locationName: _locationName),
-              SavedRegionsPage(userPosition: _userPosition),
+                  userIdentity: userIdentity.toString()),
               UserProfilePage(userIdentity: userIdentity),
             ],
           ),
@@ -104,10 +102,6 @@ class _MyAppState extends State<MyApp> {
                 Tab(
                   icon: Icon(Icons.home),
                   text: 'home',
-                ),
-                Tab(
-                  icon: Icon(Icons.save),
-                  text: 'saved',
                 ),
                 Tab(
                   icon: Icon(Icons.person),

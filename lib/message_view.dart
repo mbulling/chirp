@@ -8,8 +8,13 @@ import 'dart:convert';
 class MessageView extends StatefulWidget {
   List<Message> messages = [];
   final String userIdentity;
+  final Region region;
 
-  MessageView({Key? key, required this.messages, required this.userIdentity})
+  MessageView(
+      {Key? key,
+      required this.messages,
+      required this.userIdentity,
+      required this.region})
       : super(key: key);
 
   @override

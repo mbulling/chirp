@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'message_view.dart';
 import 'shared_structs.dart';
+import 'home_page.dart';
 import 'region_logic.dart';
 import 'common.dart';
 
 class SavedRegionsPage extends StatefulWidget {
   final Position userPosition;
+  final String userIdentity;
 
-  const SavedRegionsPage({Key? key, required this.userPosition})
+  const SavedRegionsPage(
+      {Key? key, required this.userPosition, required this.userIdentity})
       : super(key: key);
 
   @override
@@ -46,6 +50,18 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
         regionList = [];
       });
     }
+  }
+
+  void _navigateToMessageView(BuildContext context, Region region) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomePage(
+            userPosition: widget.userPosition,
+            userIdentity: int.parse(widget.userIdentity),
+            region: region),
+      ),
+    );
   }
 
   @override
@@ -101,13 +117,18 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
           : ListView.builder(
               itemCount: regionList.length,
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(regionList[index].name),
-                  subtitle:
-                      Text('Active Users: ${regionList[index].active_users}\n'
-                          'Latitude: ${regionList[index].latitude}\n'
-                          'Longitude: ${regionList[index].longitude}\n'
-                          'Radius: ${regionList[index].radius}\n'),
+                return GestureDetector(
+                  onTap: () {
+                    _navigateToMessageView(context, regionList[index]);
+                  },
+                  child: ListTile(
+                    title: Text(regionList[index].name),
+                    subtitle:
+                        Text('Active Users: ${regionList[index].active_users}\n'
+                            'Latitude: ${regionList[index].latitude}\n'
+                            'Longitude: ${regionList[index].longitude}\n'
+                            'Radius: ${regionList[index].radius}\n'),
+                  ),
                 );
               },
             ),

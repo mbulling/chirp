@@ -7,13 +7,13 @@ import 'common.dart';
 
 class HomePage extends StatefulWidget {
   final int userIdentity;
-  final String locationName;
+  final Region region;
   final Position userPosition;
 
   const HomePage(
       {Key? key,
       required this.userIdentity,
-      required this.locationName,
+      required this.region,
       required this.userPosition})
       : super(key: key);
 
@@ -22,8 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _locationText = '';
-
   @override
   void initState() {
     super.initState();
@@ -33,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.locationName),
+        title: Text(widget.region.name),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),
       ),
       body: StreamBuilder<List<Message>>(
@@ -54,8 +52,10 @@ class _HomePageState extends State<HomePage> {
           List<Message> messages = orderByDate(snapshot.data!);
 
           return MessageView(
-              messages: messages,
-              userIdentity: (widget.userIdentity).toString());
+            messages: messages,
+            userIdentity: (widget.userIdentity).toString(),
+            region: widget.region,
+          );
         },
       ),
       backgroundColor: Color(0xFFe5eaee),
