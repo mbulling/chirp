@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           List<Message> messages = orderByDate(snapshot.data!);
 
           return MessageView(
-            messages: messages,
+            messages: validMessages(messages, widget.region),
             userIdentity: (widget.userIdentity).toString(),
             region: widget.region,
           );
@@ -61,4 +61,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFFe5eaee),
     );
   }
+}
+
+List<Message> validMessages(List<Message> allMessages, Region region) {
+  List<Message> validMessageList = [];
+  for (Message message in allMessages) {
+    if (message.zone == region.name) {
+      validMessageList.add(message);
+    }
+  }
+  return validMessageList;
 }
