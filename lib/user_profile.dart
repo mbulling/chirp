@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'shared_structs.dart';
+import 'common.dart';
 
 Color getUserColor(int userIdentity) {
   // Generate a color based on the user identity
@@ -16,13 +18,19 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  List<String> postHistory = [
-    'First post',
-    'Second post',
-    'Third post',
-    'Fourth post',
-    'Fifth post',
-  ];
+  final List<Message> messages = [];
+  List<Message> userMessages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Filter messages by the user's identity
+    getMessages().listen((messages) {
+      setState(() {
+        userMessages = messages;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +55,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: postHistory.length,
+              itemCount: userMessages.length,
               itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      postHistory[index],
-                      style: TextStyle(fontSize: 16.0),
+                if (userMessages[index].author ==
+                    widget.userIdentity.toString()) {
+                  return Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        userMessages[index].content,
+                        style: TextStyle(fontSize: 16.0),
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return SizedBox.shrink();
+                }
               },
             ),
           ),
