@@ -33,9 +33,9 @@ class _MessageViewState extends State<MessageView> {
             content: _textController.text,
             author: widget.userIdentity,
             time: formattedDate,
-            zone: Zone(location: "north campus"),
+            zone: widget.region.name,
             media: ""));
-        addMessage(_textController.text, Zone(location: "north campus"),
+        addMessage(_textController.text, widget.region.name,
             widget.userIdentity, formattedDate, "");
         _textController.clear();
       });

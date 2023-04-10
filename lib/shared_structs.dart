@@ -9,13 +9,13 @@ class Message {
   Message.fromJson(Map<String, Object?> json)
       : this(
             content: json["content"] as String,
-            zone: Zone(location: json["zone"] as String),
+            zone: json["zone"] as String,
             author: json["author"] as String,
             time: json["time"] as String,
             media: json["media"] as String);
 
   final String content;
-  final Zone zone;
+  final String zone;
   final String author;
   final String time;
   final String media;
@@ -23,7 +23,7 @@ class Message {
   Map<String, Object?> toJson() {
     return {
       'content': content,
-      'zone': zone.toString(),
+      'zone': zone,
       'author': author,
       'time': time,
       'media': media

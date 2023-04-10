@@ -28,12 +28,12 @@ Stream<List<Message>> getMessages() {
 
 /// Adds message to 'messages' collection in Firestore. Requires date/time be
 /// in the format YYYY-MM-DD HH:MM:SS
-Future<void> addMessage(
-    String content, Zone zone, String author, String time, String media) async {
+Future<void> addMessage(String content, String regionName, String author,
+    String time, String media) async {
   try {
     await messageRef.add(Message(
         content: content,
-        zone: zone,
+        zone: regionName,
         author: author,
         time: time,
         media: media));
