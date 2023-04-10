@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'shared_structs.dart';
+import 'common.dart';
 
 class SavedRegionsPage extends StatefulWidget {
   @override
@@ -6,7 +8,26 @@ class SavedRegionsPage extends StatefulWidget {
 }
 
 class _SavedRegionsPageState extends State<SavedRegionsPage> {
-  List<String> savedRegions = [];
+  List<Region> regionList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getRegions();
+  }
+
+  Future<void> _getRegions() async {
+    try {
+      final List<Region> regions = await getRegions();
+      setState(() {
+        regionList = regions;
+      });
+    } catch (e) {
+      setState(() {
+        regionList = [];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +62,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                       TextButton(
                         child: Text('save'),
                         onPressed: () {
-                          setState(() {
-                            savedRegions.add(newRegionName);
-                          });
+                          // implement saveRegion(newRegionName);
                           Navigator.of(context).pop();
                         },
                       ),
@@ -56,15 +75,20 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
           ),
         ],
       ),
-      body: savedRegions.isEmpty
+      body: regionList.isEmpty
           ? Center(
               child: Text('no saved regions'),
             )
           : ListView.builder(
-              itemCount: savedRegions.length,
+              itemCount: regionList.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(savedRegions[index]),
+                  title: Text(regionList[index].name),
+                  subtitle:
+                      Text('Active Users: ${regionList[index].active_users}\n'
+                          'Latitude: ${regionList[index].latitude}\n'
+                          'Longitude: ${regionList[index].longitude}\n'
+                          'Radius: ${regionList[index].radius}'),
                 );
               },
             ),

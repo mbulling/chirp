@@ -81,3 +81,19 @@ Future<Position> getPosition() async {
   }
   return await Geolocator.getCurrentPosition();
 }
+
+final regionRef =
+    FirebaseFirestore.instance.collection('regions').withConverter<Region>(
+          fromFirestore: (snapshots, _) => Region.fromJson(snapshots.data()!),
+          toFirestore: (region, _) => region.toJson(),
+        );
+
+/// Retrieves all regions from 'regions' collection in Firestore
+Future<List<Region>> getRegions() async {
+  List<Region> regions = [];
+  QuerySnapshot<Region> querySnapshot = await regionRef.get();
+  for (QueryDocumentSnapshot<Region> documentSnapshot in querySnapshot.docs) {
+    regions.add(documentSnapshot.data());
+  }
+  return regions;
+}
