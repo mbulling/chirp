@@ -34,10 +34,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isOddUser = widget.userIdentity % 2 != 0;
+
     return Scaffold(
       backgroundColor: Color(0xFFe5eaee),
       appBar: AppBar(
-        title: Text('profile'),
+        title: Text('Profile'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),
       ),
       body: Column(
@@ -48,8 +50,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
+                shape: isOddUser ? BoxShape.rectangle : BoxShape.circle,
                 color: getUserColor(widget.userIdentity),
+                borderRadius: isOddUser ? BorderRadius.circular(16.0) : null,
               ),
             ),
           ),
@@ -64,7 +67,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xFF023258),
-                        borderRadius: BorderRadius.circular(16.0),
+                        borderRadius: BorderRadius.circular(isOddUser
+                            ? 16.0
+                            : 50.0), // 50.0 is half of the container height/width
                       ),
                       padding: EdgeInsets.symmetric(
                         vertical: 8.0,
