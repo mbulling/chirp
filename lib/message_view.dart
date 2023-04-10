@@ -139,7 +139,7 @@ class _MessageViewState extends State<MessageView> {
                     child: TextField(
                       controller: _textController,
                       decoration: InputDecoration(
-                        hintText: 'Type a message',
+                        hintText: 'type message',
                         border: InputBorder.none,
                       ),
                     ),

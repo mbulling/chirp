@@ -39,7 +39,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       backgroundColor: Color(0xFFe5eaee),
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('you'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),
       ),
       body: Column(
