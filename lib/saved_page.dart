@@ -23,11 +23,23 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     _getRegions();
   }
 
+  List<Region> validRegions(List<Region> allRegions) {
+    List<Region> validRegions = [];
+    for (Region region in allRegions) {
+      if (region.latitude != null &&
+          region.longitude != null &&
+          inRegion(region, widget.userPosition)) {
+        validRegions.add(region);
+      }
+    }
+    return validRegions;
+  }
+
   Future<void> _getRegions() async {
     try {
       final List<Region> regions = await getRegions();
       setState(() {
-        regionList = regions;
+        regionList = validRegions(regions);
       });
     } catch (e) {
       setState(() {
@@ -91,12 +103,11 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(regionList[index].name),
-                  subtitle: Text(
-                      'Active Users: ${regionList[index].active_users}\n'
-                      'Latitude: ${regionList[index].latitude}\n'
-                      'Longitude: ${regionList[index].longitude}\n'
-                      'Radius: ${regionList[index].radius}\n'
-                      'In Region: ${inRegion(regionList[index], widget.userPosition)}\n'),
+                  subtitle:
+                      Text('Active Users: ${regionList[index].active_users}\n'
+                          'Latitude: ${regionList[index].latitude}\n'
+                          'Longitude: ${regionList[index].longitude}\n'
+                          'Radius: ${regionList[index].radius}\n'),
                 );
               },
             ),

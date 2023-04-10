@@ -33,8 +33,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    super.initState();
     _getLocation();
+    super.initState();
   }
 
   Future<void> _getLocation() async {
