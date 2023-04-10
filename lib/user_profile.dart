@@ -61,10 +61,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     widget.userIdentity.toString()) {
                   return Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFF023258),
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal: 16.0,
+                      ),
                       child: Text(
                         userMessages[index].content,
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   );
