@@ -3,26 +3,30 @@ class Message {
       {required this.content,
       required this.zone,
       required this.author,
-      required this.time});
+      required this.time,
+      required this.media});
 
   Message.fromJson(Map<String, Object?> json)
       : this(
             content: json["content"] as String,
             zone: Zone(location: json["zone"] as String),
             author: json["author"] as String,
-            time: json["time"] as String);
+            time: json["time"] as String,
+            media: json["media"] as String);
 
   final String content;
   final Zone zone;
   final String author;
   final String time;
+  final String media;
 
   Map<String, Object?> toJson() {
     return {
       'content': content,
       'zone': zone.toString(),
       'author': author,
-      'time': time
+      'time': time,
+      'media': media
     };
   }
 }
