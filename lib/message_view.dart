@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'shared_structs.dart';
+import 'package:intl/intl.dart';
 import 'user_profile.dart';
 import 'common.dart';
 import 'dart:convert';
@@ -20,15 +21,17 @@ class _MessageViewState extends State<MessageView> {
 
   void _sendMessage() {
     if (_textController.text.isNotEmpty) {
+      DateTime now = DateTime.now();
+      String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
       setState(() {
         widget.messages.add(Message(
             content: _textController.text,
             author: widget.userIdentity,
-            time: "2023-04-09 05:53:02",
+            time: formattedDate,
             zone: Zone(location: "north campus"),
             media: ""));
         addMessage(_textController.text, Zone(location: "north campus"),
-            widget.userIdentity, "2023-04-09 05:53:02", "");
+            widget.userIdentity, formattedDate, "");
         _textController.clear();
       });
     }
