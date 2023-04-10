@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'shared_structs.dart';
+import 'region_logic.dart';
 import 'common.dart';
 
 class SavedRegionsPage extends StatefulWidget {
+  final Position userPosition;
+
+  const SavedRegionsPage({Key? key, required this.userPosition})
+      : super(key: key);
+
   @override
   _SavedRegionsPageState createState() => _SavedRegionsPageState();
 }
@@ -84,11 +91,12 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   title: Text(regionList[index].name),
-                  subtitle:
-                      Text('Active Users: ${regionList[index].active_users}\n'
-                          'Latitude: ${regionList[index].latitude}\n'
-                          'Longitude: ${regionList[index].longitude}\n'
-                          'Radius: ${regionList[index].radius}'),
+                  subtitle: Text(
+                      'Active Users: ${regionList[index].active_users}\n'
+                      'Latitude: ${regionList[index].latitude}\n'
+                      'Longitude: ${regionList[index].longitude}\n'
+                      'Radius: ${regionList[index].radius}\n'
+                      'In Region: ${inRegion(regionList[index], widget.userPosition)}\n'),
                 );
               },
             ),
