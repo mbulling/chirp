@@ -6,7 +6,8 @@ import 'shared_structs.dart';
 import 'common.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final int userIdentity;
+  const HomePage({Key? key, required this.userIdentity}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -82,7 +83,9 @@ class _HomePageState extends State<HomePage> {
 
           List<Message> messages = orderByDate(snapshot.data!);
 
-          return MessageView(messages: messages);
+          return MessageView(
+              messages: messages,
+              userIdentity: (widget.userIdentity).toString());
         },
       ),
       backgroundColor: Color(0xFFe5eaee),

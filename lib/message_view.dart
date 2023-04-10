@@ -6,8 +6,10 @@ import 'dart:convert';
 
 class MessageView extends StatefulWidget {
   List<Message> messages = [];
+  final String userIdentity;
 
-  MessageView({Key? key, required this.messages}) : super(key: key);
+  MessageView({Key? key, required this.messages, required this.userIdentity})
+      : super(key: key);
 
   @override
   _MessageViewState createState() => _MessageViewState();
@@ -21,11 +23,11 @@ class _MessageViewState extends State<MessageView> {
       setState(() {
         widget.messages.add(Message(
             content: _textController.text,
-            author: "123456",
+            author: widget.userIdentity,
             time: "2023-04-09 05:53:02",
             zone: Zone(location: "north campus")));
         addMessage(_textController.text, Zone(location: "north campus"),
-            "123456", "2023-04-09 05:53:02");
+            widget.userIdentity, "2023-04-09 05:53:02");
         _textController.clear();
       });
     }
@@ -46,13 +48,20 @@ class _MessageViewState extends State<MessageView> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Align(
-                        alignment: widget.messages[index].author == 'me'
-                            ? Alignment.centerRight
+                        alignment: widget.messages[index].author ==
+                                widget.userIdentity
+                            ? Alignment
+                                .centerRight // align to the right if sent by user
                             : Alignment.centerLeft,
                         child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width *
+                                0.7, // set a maximum width for the container
+                          ),
                           padding: EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: widget.messages[index].author == 'me'
+                            color: widget.messages[index].author ==
+                                    widget.userIdentity
                                 ? Color(0xFF023258)
                                 : Colors.grey,
                             borderRadius: BorderRadius.circular(16.0),
@@ -68,14 +77,24 @@ class _MessageViewState extends State<MessageView> {
                       ),
                     ),
                     Positioned(
-                      left: widget.messages[index].author == 'me' ? null : 0,
-                      right: widget.messages[index].author == 'me' ? 0 : null,
+                      left: widget.messages[index].author == widget.userIdentity
+                          ? null
+                          : 0,
+                      right:
+                          widget.messages[index].author == widget.userIdentity
+                              ? 0
+                              : null,
                       bottom: 7,
                       child: Container(
                         margin: EdgeInsets.only(
-                          left: widget.messages[index].author == 'me' ? 0 : 8.0,
-                          right:
-                              widget.messages[index].author == 'me' ? 8.0 : 0,
+                          left: widget.messages[index].author ==
+                                  widget.userIdentity
+                              ? 0
+                              : 8.0,
+                          right: widget.messages[index].author ==
+                                  widget.userIdentity
+                              ? 8.0
+                              : 0,
                         ),
                         width: 12,
                         height: 12,

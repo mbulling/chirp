@@ -16,6 +16,8 @@ int generateUserIdentity() {
   return random.nextInt(999999);
 }
 
+final int userIdentity = generateUserIdentity();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -27,9 +29,9 @@ class MyApp extends StatelessWidget {
         child: Scaffold(
           body: TabBarView(
             children: [
-              HomePage(), // replace this line with HomePage widget from home_page.dart
+              HomePage(userIdentity: userIdentity),
               SavedRegionsPage(),
-              UserProfilePage(userIdentity: generateUserIdentity()),
+              UserProfilePage(userIdentity: userIdentity),
             ],
           ),
           bottomNavigationBar: Container(
