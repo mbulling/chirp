@@ -44,68 +44,73 @@ class _MessageViewState extends State<MessageView> {
             child: ListView.builder(
               itemCount: widget.messages.length,
               itemBuilder: (BuildContext context, int index) {
+                final message = widget.messages[index];
+                final isSentByUser = message.author == widget.userIdentity;
+
                 return Stack(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Align(
-                        alignment: widget.messages[index].author ==
-                                widget.userIdentity
-                            ? Alignment
-                                .centerRight // align to the right if sent by user
-                            : Alignment.centerLeft,
-                        child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.of(context).size.width *
-                                0.7, // set a maximum width for the container
-                          ),
-                          padding: EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                            color: widget.messages[index].author ==
-                                    widget.userIdentity
-                                ? Color(0xFF023258)
-                                : Colors.grey,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Text(
-                            widget.messages[index].content,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.white,
+                    if (message.media.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: isSentByUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: Image.network(
+                              message.media,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Positioned(
-                      left: widget.messages[index].author == widget.userIdentity
-                          ? null
-                          : 0,
-                      right:
-                          widget.messages[index].author == widget.userIdentity
-                              ? 0
-                              : null,
-                      bottom: 7,
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          left: widget.messages[index].author ==
-                                  widget.userIdentity
-                              ? 0
-                              : 8.0,
-                          right: widget.messages[index].author ==
-                                  widget.userIdentity
-                              ? 8.0
-                              : 0,
-                        ),
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: getUserColor(
-                              int.parse(widget.messages[index].author)),
+                    if (message.content.isNotEmpty)
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: isSentByUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.7,
+                            ),
+                            padding: EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              color: isSentByUser
+                                  ? Color(0xFF023258)
+                                  : Colors.grey,
+                              borderRadius: BorderRadius.circular(16.0),
+                            ),
+                            child: Text(
+                              message.content,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    if (message.content.isNotEmpty)
+                      Positioned(
+                        left: isSentByUser ? null : 0,
+                        right: isSentByUser ? 0 : null,
+                        bottom: 7,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            left: isSentByUser ? 0 : 8.0,
+                            right: isSentByUser ? 8.0 : 0,
+                          ),
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: getUserColor(int.parse(message.author)),
+                          ),
+                        ),
+                      ),
                   ],
                 );
               },
