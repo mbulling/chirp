@@ -11,7 +11,8 @@ Color getUserColor(int userIdentity) {
 class UserProfilePage extends StatefulWidget {
   final int userIdentity;
 
-  UserProfilePage({Key? key, required this.userIdentity}) : super(key: key);
+  const UserProfilePage({Key? key, required this.userIdentity})
+      : super(key: key);
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
@@ -37,15 +38,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
     bool isOddUser = widget.userIdentity % 2 != 0;
 
     return Scaffold(
-      backgroundColor: Color(0xFFe5eaee),
+      backgroundColor: const Color(0xFFe5eaee),
       appBar: AppBar(
-        title: Text('you'),
-        backgroundColor: Color.fromARGB(255, 19, 64, 100),
+        title: const Text('you'),
+        backgroundColor: const Color.fromARGB(255, 19, 64, 100),
       ),
       body: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Container(
               width: 100,
               height: 100,
@@ -63,21 +64,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 if (userMessages[index].author ==
                     widget.userIdentity.toString()) {
                   return Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF023258),
+                        color: const Color(0xFF023258),
                         borderRadius: BorderRadius.circular(isOddUser
                             ? 16.0
                             : 50.0), // 50.0 is half of the container height/width
                       ),
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         vertical: 8.0,
                         horizontal: 16.0,
                       ),
                       child: Text(
                         userMessages[index].content,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16.0,
                           color: Colors.white,
                         ),
@@ -85,7 +86,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                   );
                 } else {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
               },
             ),
