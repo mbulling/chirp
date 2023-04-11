@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-import 'home_page.dart';
 import 'user_profile.dart';
 import 'saved_page.dart';
 import 'common.dart';
@@ -14,7 +13,7 @@ void main() async {
 }
 
 int generateUserIdentity() {
-  Random random = new Random();
+  Random random = Random();
   return random.nextInt(999999);
 }
 
