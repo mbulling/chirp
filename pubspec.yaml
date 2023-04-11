@@ -38,6 +38,7 @@ dependencies:
   geocoding: ^2.1.0
   firebase_core: ^2.9.0
   cloud_firestore: ^4.5.0
+  flutter_layout_grid: ^2.0.1
   intl: ^0.17.0
 
 dev_dependencies:
