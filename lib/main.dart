@@ -9,7 +9,7 @@ import 'dart:math';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 int generateUserIdentity() {
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
           bottomNavigationBar: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 top: BorderSide(
                   color: Color(0xFFe5eaee),
@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            child: TabBar(
+            child: const TabBar(
               labelColor: Color(0xFF023258),
               unselectedLabelColor: Colors.grey,
               tabs: [

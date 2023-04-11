@@ -32,19 +32,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.region.name),
-        backgroundColor: Color.fromARGB(255, 19, 64, 100),
+        backgroundColor: const Color.fromARGB(255, 19, 64, 100),
       ),
       body: StreamBuilder<List<Message>>(
         stream: getMessages(),
         builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
           if (snapshot.hasError) {
-            return Center(
+            return const Center(
               child: Text('Something went wrong'),
             );
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      backgroundColor: Color(0xFFe5eaee),
+      backgroundColor: const Color(0xFFe5eaee),
     );
   }
 }
