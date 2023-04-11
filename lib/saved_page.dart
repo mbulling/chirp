@@ -34,6 +34,13 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     return atan2(b.dy - a.dy, b.dx - a.dx);
   }
 
+  double randomRegionSize() {
+    var random = Random();
+    double screenSizeFactor = random.nextDouble() * 0.2 + 0.2;
+    return min(MediaQuery.of(context).size.width * screenSizeFactor,
+        MediaQuery.of(context).size.height * screenSizeFactor);
+  }
+
   List<Region> validRegions(List<Region> allRegions) {
     List<Region> validRegions = [];
     for (Region region in allRegions) {
@@ -76,6 +83,9 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     // sort regions by radius in ascending order
     regionList.sort((a, b) => a.radius.compareTo(b.radius));
 
+    List<dynamic> regionSizes =
+        regionList.map((_) => randomRegionSize()).toList();
+
     // get the region with the smallest radius
     final smallestRegion = regionList.first;
 
@@ -86,7 +96,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     // calculate the position of the smallest region
     final smallestRegionPosition = Offset(
         (MediaQuery.of(context).size.width - smallestRegionSize) / 2.0,
-        (MediaQuery.of(context).size.height - smallestRegionSize) / 3.0);
+        (MediaQuery.of(context).size.height - 2 * smallestRegionSize) / 2.0);
 
     // calculate the positions of the other regions
     regionPositions.clear();
@@ -97,12 +107,12 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
       var random = Random();
       double angle = random.nextDouble() * (pi);
       while (angles.contains(angle)) {
-        angle = random.nextDouble() * pi;
+        angle = random.nextDouble() * (pi / 2.0) + (pi / 4.0);
       }
       angles.add(angle);
-      final regionSize = min(MediaQuery.of(context).size.width * 0.15,
-          MediaQuery.of(context).size.height * 0.15);
-      final radiusSum = smallestRegionSize / 2 + regionSize / 2;
+      final regionSize = min(MediaQuery.of(context).size.width * 0.20,
+          MediaQuery.of(context).size.height * 0.20);
+      final radiusSum = (smallestRegionSize / 2.0) + (regionSize / 2.0);
       final position = Offset(
           smallestRegionPosition.dx +
               smallestRegionSize / 2 +
@@ -139,9 +149,11 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                   .where((region) => region != smallestRegion)
                   .map((region) {
                 final index = regionList.indexOf(region);
-                final regionSize = min(MediaQuery.of(context).size.width * 0.15,
-                    MediaQuery.of(context).size.height * 0.15);
+                // final regionSize = min(MediaQuery.of(context).size.width * 0.15,
+                //     MediaQuery.of(context).size.height * 0.15);
+                final regionSize = regionSizes[index - 1];
                 final position = regionPositions[index - 1];
+                final smallestRegionSize = regionSizes.first;
                 return Positioned(
                   left: position.dx,
                   top: position.dy,
@@ -229,17 +241,28 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
   }
 
 // helper function to calculate the position of a new region
-  Offset _getRegionPosition(double regionSize) {
+  Offset _getRegionPosition(double regionSize, List<double> regionSizes) {
 // set the initial position at the center of the screen
     var position = Offset(
       (MediaQuery.of(context).size.width - regionSize) / 2.0,
       (MediaQuery.of(context).size.height - regionSize) / 2.0,
     );
 // check if the initial position overlaps with any existing regions
-    for (var existingPosition in regionPositions) {
+    // for (var existingPosition in regionPositions) {
+    //   var direction = (position - existingPosition).direction;
+    //   var distance = (position - existingPosition).distance;
+    //   var radiusSum = regionSize / 2.0 + existingPosition.distance * 0.5;
+    //   if (distance < radiusSum) {
+    //     // adjust the position to ensure regions are touching
+    //     position += Offset.fromDirection(direction, radiusSum - distance);
+    //   }
+    // }
+    for (int i = 0; i < regionPositions.length; i++) {
+      var existingPosition = regionPositions[i];
+      var existingRegionSize = regionSizes[i];
       var direction = (position - existingPosition).direction;
       var distance = (position - existingPosition).distance;
-      var radiusSum = regionSize / 2.0 + existingPosition.distance * 0.5;
+      var radiusSum = regionSize / 2.0 + existingRegionSize / 2.0;
       if (distance < radiusSum) {
         // adjust the position to ensure regions are touching
         position += Offset.fromDirection(direction, radiusSum - distance);
