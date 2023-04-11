@@ -67,7 +67,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFe5eaee),
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       appBar: AppBar(
         title: Text('regions'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),
@@ -112,8 +112,12 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
       ),
       body: regionList.isEmpty
           ? Center(
-              child: Text('no saved regions'),
-            )
+              child: Stack(
+              children: [
+                Container(color: Colors.black),
+                Text('no saved regions')
+              ],
+            ))
           : ListView.builder(
               itemCount: regionList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -122,12 +126,15 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                     _navigateToMessageView(context, regionList[index]);
                   },
                   child: ListTile(
-                    title: Text(regionList[index].name),
-                    subtitle:
-                        Text('Active Users: ${regionList[index].active_users}\n'
-                            'Latitude: ${regionList[index].latitude}\n'
-                            'Longitude: ${regionList[index].longitude}\n'
-                            'Radius: ${regionList[index].radius}\n'),
+                    tileColor: Colors.black,
+                    title: Text(
+                      regionList[index].name,
+                      style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                    subtitle: Text(
+                      'active Users: ${regionList[index].active_users}\n',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 );
               },

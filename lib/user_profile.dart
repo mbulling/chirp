@@ -37,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     bool isOddUser = widget.userIdentity % 2 != 0;
 
     return Scaffold(
-      backgroundColor: Color(0xFFe5eaee),
+      backgroundColor: Color.fromARGB(255, 0, 0, 0),
       appBar: AppBar(
         title: Text('you'),
         backgroundColor: Color.fromARGB(255, 19, 64, 100),

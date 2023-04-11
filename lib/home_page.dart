@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      backgroundColor: Color(0xFFe5eaee),
     );
   }
 }
