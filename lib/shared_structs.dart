@@ -1,12 +1,12 @@
 import 'dart:math';
 
 class Message {
-  Message({
-    required this.content,
-    required this.region,
-    required this.author,
-    required this.time,
-  });
+  Message(
+      {required this.content,
+      required this.region,
+      required this.author,
+      required this.time,
+      required this.media});
 
   Message.fromJson(Map<String, Object?> json)
       : this(
@@ -18,12 +18,14 @@ class Message {
                 radius: json["radius"] as double,
                 actives: json["actives"] as int),
             author: json["author"] as String,
-            time: json["time"] as String);
+            time: json["time"] as String,
+            media: json["media"] as String);
 
   final String content;
   final Region region;
   final String author;
   final String time;
+  final String media;
 
   Map<String, Object?> toJson() {
     return {
@@ -34,6 +36,7 @@ class Message {
       'author': author,
       'time': time,
       'actives': region.getActives(),
+      'media': media
     };
   }
 }
