@@ -28,15 +28,11 @@ Stream<List<Message>> getMessages() {
 
 /// Adds message to 'messages' collection in Firestore. Requires date/time be
 /// in the format YYYY-MM-DD HH:MM:SS
-Future<void> addMessage(String content, String regionName, String author,
+Future<void> addMessage(String content, Region region, String author,
     String time, String media) async {
   try {
-    await messageRef.add(Message(
-        content: content,
-        zone: regionName,
-        author: author,
-        time: time,
-        media: media));
+    await messageRef.add(
+        Message(content: content, region: region, author: author, time: time));
   } catch (e) {
     print(e);
   }
@@ -55,7 +51,7 @@ List<Message> orderByDate(List<Message> messages) {
 }
 
 bool shareZone(Message msg1, Message msg2) {
-  return msg1.zone == msg2.zone;
+  return msg1.region == msg2.region;
 }
 
 /// Gives user position
