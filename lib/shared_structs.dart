@@ -12,9 +12,11 @@ class Message {
       : this(
             content: json["content"] as String,
             region: Region(
+                name: json["regionName"] as String,
                 latitude: json["latitude"] as double,
                 longitude: json["longitude"] as double,
-                radius: json["radius"] as double),
+                radius: json["radius"] as double,
+                actives: json["actives"] as int),
             author: json["author"] as String,
             time: json["time"] as String);
 
@@ -31,27 +33,36 @@ class Message {
       'radius': region.getRadius(),
       'author': author,
       'time': time,
+      'actives': region.getActives(),
     };
   }
 }
 
 class Region {
   Region(
-      {required this.longitude, required this.latitude, required this.radius});
+      {required this.name,
+      required this.longitude,
+      required this.latitude,
+      required this.radius,
+      required this.actives});
 
   Region.fromJson(Map<String, Object?> json)
       : this(
+            name: json["name"] as String,
             longitude: json["longitude"] as double,
             latitude: json["latitude"] as double,
-            radius: json["radius"] as double);
+            radius: json["radius"] as double,
+            actives: json["actives"] as int);
 
   Map<String, Object?> toJson() {
     return {"longitude": longitude, "latitude": latitude, "radius": radius};
   }
 
+  final String name;
   final double longitude;
   final double latitude;
   final double radius;
+  final int actives;
   final double earthRadius = 6371.0;
 
   @override
@@ -71,6 +82,10 @@ class Region {
 
   double getRadius() {
     return radius;
+  }
+
+  int getActives() {
+    return actives;
   }
 
   double toRadians(double degree) {
