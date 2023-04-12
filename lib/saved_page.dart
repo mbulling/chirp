@@ -124,45 +124,109 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFe5eaee),
       appBar: AppBar(
-        title: const Text('regions'),
-        backgroundColor: const Color.fromARGB(255, 19, 64, 100),
-        actions: [
-          IconButton(
-            onPressed: () {
-              // show dialog to add a new region
-              // ...
-            },
-            icon: const Icon(Icons.add),
+        title: const Text(
+          'Clique',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        elevation: 0,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Stack(
-            children: [
-              // draw other regions
-              ...regionList
-                  .where((region) => region != smallestRegion)
-                  .map((region) {
-                final index = regionList.indexOf(region);
-                // final regionSize = min(MediaQuery.of(context).size.width * 0.15,
-                //     MediaQuery.of(context).size.height * 0.15);
-                final regionSize = regionSizes[index - 1];
-                final position = regionPositions[index - 1];
-                final smallestRegionSize = regionSizes.first;
-                return Positioned(
-                  left: position.dx,
-                  top: position.dy,
+      body: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56.0),
+          child: Container(
+            margin: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: const Color.fromARGB(255, 19, 64, 100),
+            ),
+            child: AppBar(
+              title: const Text('regions'),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    // show dialog to add a new region
+                    // ...
+                  },
+                  icon: const Icon(Icons.add),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                // draw other regions
+                ...regionList
+                    .where((region) => region != smallestRegion)
+                    .map((region) {
+                  final index = regionList.indexOf(region);
+                  // final regionSize = min(MediaQuery.of(context).size.width * 0.15,
+                  //     MediaQuery.of(context).size.height * 0.15);
+                  final regionSize = regionSizes[index - 1];
+                  final position = regionPositions[index - 1];
+                  final smallestRegionSize = regionSizes.first;
+                  return Positioned(
+                    left: position.dx,
+                    top: position.dy,
+                    child: GestureDetector(
+                      onTap: () {
+                        _navigateToMessageView(context, region);
+                      },
+                      child: Container(
+                        width: regionSize.toDouble(),
+                        height: regionSize.toDouble(),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              region.name,
+                              style: const TextStyle(fontSize: 10),
+                              textAlign: TextAlign.center,
+                            ),
+                            Text(
+                              'Active Users: ${region.active_users}',
+                              style: const TextStyle(fontSize: 8),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                Positioned(
+                  left: smallestRegionPosition.dx,
+                  top: smallestRegionPosition.dy,
                   child: GestureDetector(
                     onTap: () {
-                      _navigateToMessageView(context, region);
+                      _navigateToMessageView(context, smallestRegion);
                     },
                     child: Container(
-                      width: regionSize.toDouble(),
-                      height: regionSize.toDouble(),
+                      width: smallestRegionSize.toDouble(),
+                      height: smallestRegionSize.toDouble(),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
@@ -179,60 +243,21 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            region.name,
+                            smallestRegion.name,
                             style: const TextStyle(fontSize: 10),
                             textAlign: TextAlign.center,
                           ),
                           Text(
-                            'Active Users: ${region.active_users}',
+                            'Active Users: ${smallestRegion.active_users}',
                             style: const TextStyle(fontSize: 8),
                           ),
                         ],
                       ),
                     ),
                   ),
-                );
-              }).toList(),
-              Positioned(
-                left: smallestRegionPosition.dx,
-                top: smallestRegionPosition.dy,
-                child: GestureDetector(
-                  onTap: () {
-                    _navigateToMessageView(context, smallestRegion);
-                  },
-                  child: Container(
-                    width: smallestRegionSize.toDouble(),
-                    height: smallestRegionSize.toDouble(),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          smallestRegion.name,
-                          style: const TextStyle(fontSize: 10),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          'Active Users: ${smallestRegion.active_users}',
-                          style: const TextStyle(fontSize: 8),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
