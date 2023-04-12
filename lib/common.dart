@@ -31,8 +31,12 @@ Stream<List<Message>> getMessages() {
 Future<void> addMessage(String content, Region region, String author,
     String time, String media) async {
   try {
-    await messageRef.add(
-        Message(content: content, region: region, author: author, time: time));
+    await messageRef.add(Message(
+        content: content,
+        region: region,
+        author: author,
+        time: time,
+        media: media));
   } catch (e) {
     print(e);
   }
