@@ -39,6 +39,16 @@ class Region {
   Region(
       {required this.longitude, required this.latitude, required this.radius});
 
+  Region.fromJson(Map<String, Object?> json)
+      : this(
+            longitude: json["longitude"] as double,
+            latitude: json["latitude"] as double,
+            radius: json["radius"] as double);
+
+  Map<String, Object?> toJson() {
+    return {"longitude": longitude, "latitude": latitude, "radius": radius};
+  }
+
   final double longitude;
   final double latitude;
   final double radius;
