@@ -1,81 +1,80 @@
+import 'dart:math';
+
 class Message {
-  Message(
-      {required this.content,
-      required this.zone,
-      required this.author,
-      required this.time,
-      required this.media});
+  Message({
+    required this.content,
+    required this.region,
+    required this.author,
+    required this.time,
+  });
 
   Message.fromJson(Map<String, Object?> json)
       : this(
             content: json["content"] as String,
-            zone: json["zone"] as String,
+            region: json["region"] as Region,
             author: json["author"] as String,
-            time: json["time"] as String,
-            media: json["media"] as String);
+            time: json["time"] as String);
 
   final String content;
-  final String zone;
+  final Region region;
   final String author;
   final String time;
-  final String media;
 
   Map<String, Object?> toJson() {
     return {
       'content': content,
-      'zone': zone,
+      'region': region,
       'author': author,
       'time': time,
-      'media': media
     };
   }
 }
 
 class Region {
   Region(
-      {required this.active_users,
-      required this.latitude,
-      required this.longitude,
-      required this.name,
-      required this.radius});
+      {required this.longitude, required this.latitude, required this.radius});
 
-  Region.fromJson(Map<String, Object?> json)
-      : this(
-            active_users: json["active_users"] as int,
-            latitude: json["latitude"] as double,
-            longitude: json["longitude"] as double,
-            name: json["name"] as String,
-            radius: json["radius"] as int);
-
-  final int active_users;
-  final double latitude;
   final double longitude;
-  final String name;
-  final int radius;
-
-  Map<String, Object?> toJson() {
-    return {
-      'active_users': active_users,
-      'latitude': latitude,
-      'longitude': longitude,
-      'name': name,
-      'radius': radius
-    };
-  }
-}
-
-class Zone {
-  Zone({required this.location});
-
-  final String location;
+  final double latitude;
+  final double radius;
+  final double earthRadius = 6371.0;
 
   @override
   bool operator ==(Object other) {
-    return other is Zone && other.location == location;
+    return other is Region &&
+        isInteresting(
+            latitude, longitude, other.getLatitude(), other.getLongitude());
   }
 
-  @override
-  String toString() {
-    return location;
+  double getLongitude() {
+    return longitude;
+  }
+
+  double getLatitude() {
+    return latitude;
+  }
+
+  double toRadians(double degree) {
+    return degree * pi / 180.0;
+  }
+
+  double haversineDistance(
+      double lat1, double long1, double lat2, double long2) {
+    double dLat = toRadians(lat2 - lat1);
+    double dLong = toRadians(long2 - long1);
+
+    lat1 = toRadians(lat1);
+    lat2 = toRadians(lat2);
+
+    double a =
+        pow(sin(dLat / 2), 2) + pow(sin(dLong / 2), 2) * cos(lat1) * cos(lat2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    return earthRadius * c;
+  }
+
+  bool isInteresting(double lat1, double long1, double lat2, double long2) {
+    double distance = haversineDistance(lat1, long1, lat2, long2);
+    return distance <= radius;
   }
 }
