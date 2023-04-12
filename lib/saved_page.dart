@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'message_view.dart';
 import 'shared_structs.dart';
 import 'home_page.dart';
 import 'region_logic.dart';
@@ -125,17 +124,17 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFe5eaee),
+      backgroundColor: const Color(0xFFe5eaee),
       appBar: AppBar(
-        title: Text('regions'),
-        backgroundColor: Color.fromARGB(255, 19, 64, 100),
+        title: const Text('regions'),
+        backgroundColor: const Color.fromARGB(255, 19, 64, 100),
         actions: [
           IconButton(
             onPressed: () {
               // show dialog to add a new region
               // ...
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -172,7 +171,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 3,
                             blurRadius: 7,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -181,12 +180,12 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                         children: [
                           Text(
                             region.name,
-                            style: TextStyle(fontSize: 10),
+                            style: const TextStyle(fontSize: 10),
                             textAlign: TextAlign.center,
                           ),
                           Text(
                             'Active Users: ${region.active_users}',
-                            style: TextStyle(fontSize: 8),
+                            style: const TextStyle(fontSize: 8),
                           ),
                         ],
                       ),
@@ -212,7 +211,7 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 3,
                           blurRadius: 7,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -221,12 +220,12 @@ class _SavedRegionsPageState extends State<SavedRegionsPage> {
                       children: [
                         Text(
                           smallestRegion.name,
-                          style: TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 10),
                           textAlign: TextAlign.center,
                         ),
                         Text(
                           'Active Users: ${smallestRegion.active_users}',
-                          style: TextStyle(fontSize: 8),
+                          style: const TextStyle(fontSize: 8),
                         ),
                       ],
                     ),

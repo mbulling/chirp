@@ -1,6 +1,5 @@
 import 'shared_structs.dart';
 import 'package:geolocator/geolocator.dart';
-import 'common.dart';
 import 'dart:math';
 
 const double earthRadius = 6371000;

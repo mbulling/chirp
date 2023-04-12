@@ -45,7 +45,7 @@ class _MessageViewState extends State<MessageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 0, 0),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -84,7 +84,7 @@ class _MessageViewState extends State<MessageView> {
                         // The message
                         if (message.content.isNotEmpty)
                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Align(
                               alignment: isSentByUser
                                   ? Alignment.centerRight
@@ -94,16 +94,16 @@ class _MessageViewState extends State<MessageView> {
                                   maxWidth:
                                       MediaQuery.of(context).size.width * 0.7,
                                 ),
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 decoration: BoxDecoration(
                                   color: isSentByUser
-                                      ? Color.fromARGB(255, 111, 185, 211)
-                                      : Color.fromARGB(255, 31, 38, 44),
+                                      ? const Color.fromARGB(255, 111, 185, 211)
+                                      : const Color.fromARGB(255, 31, 38, 44),
                                   borderRadius: BorderRadius.circular(16.0),
                                 ),
                                 child: Text(
                                   message.content,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16.0,
                                     color: Colors.white,
                                   ),
@@ -145,7 +145,7 @@ class _MessageViewState extends State<MessageView> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -153,10 +153,10 @@ class _MessageViewState extends State<MessageView> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 16.0),
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: TextField(
                       controller: _textController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'type message',
                         border: InputBorder.none,
                       ),
@@ -164,7 +164,7 @@ class _MessageViewState extends State<MessageView> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   onPressed: _sendMessage,
                 ),
               ],
