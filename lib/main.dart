@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
 import 'user_profile.dart';
 import 'saved_page.dart';
 import 'common.dart';
-import 'dart:math';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
   runApp(const MyApp());
 }
-
-int generateUserIdentity() {
-  Random random = Random();
-  return random.nextInt(999999);
-}
-
-final int userIdentity = generateUserIdentity();
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,46 +20,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late Position _userPosition;
   late String _locationName;
+  late int _userIdentity;
 
   @override
-  void initState() {
-    _getLocation();
+  void initState() async {
+    Position position = await getPosition();
+    String positionName = await getPositionName(position);
+    int userId = createUserId();
+    setState(() {
+      _userPosition = position;
+      _locationName = positionName;
+      _userIdentity = userId;
+    });
     super.initState();
-  }
-
-  Future<void> _getLocation() async {
-    try {
-      final Position position = await _determinePosition();
-      setState(() {
-        _userPosition = position;
-      });
-      _getLocationName(position);
-    } catch (e) {
-      setState(() {
-        _locationName = 'Error: ${e.toString()}';
-      });
-    }
-  }
-
-  Future<void> _getLocationName(Position position) async {
-    try {
-      final List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      setState(() {
-        if (placemarks.isNotEmpty) {
-          final Placemark placemark = placemarks[0];
-          _locationName =
-              placemark.subLocality ?? placemark.locality ?? 'unknown1';
-          _locationName = _locationName.toLowerCase();
-        } else {
-          _locationName = 'unknown2';
-        }
-      });
-    } catch (e) {
-      setState(() {
-        _locationName = 'Error: ${e.toString()}';
-      });
-    }
   }
 
   @override
@@ -81,8 +45,8 @@ class _MyAppState extends State<MyApp> {
             children: [
               SavedRegionsPage(
                   userPosition: _userPosition,
-                  userIdentity: userIdentity.toString()),
-              UserProfilePage(userIdentity: userIdentity),
+                  userIdentity: _userIdentity.toString()),
+              UserProfilePage(userIdentity: _userIdentity),
             ],
           ),
           bottomNavigationBar: Container(
@@ -112,28 +76,5 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return await Geolocator.getCurrentPosition();
   }
 }
