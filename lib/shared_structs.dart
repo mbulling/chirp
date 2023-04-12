@@ -11,7 +11,10 @@ class Message {
   Message.fromJson(Map<String, Object?> json)
       : this(
             content: json["content"] as String,
-            region: json["region"] as Region,
+            region: Region(
+                latitude: json["latitude"] as double,
+                longitude: json["longitude"] as double,
+                radius: json["radius"] as double),
             author: json["author"] as String,
             time: json["time"] as String);
 
@@ -23,7 +26,9 @@ class Message {
   Map<String, Object?> toJson() {
     return {
       'content': content,
-      'region': region,
+      'longitude': region.getLongitude(),
+      'latitude': region.getLatitude(),
+      'radius': region.getRadius(),
       'author': author,
       'time': time,
     };
@@ -52,6 +57,10 @@ class Region {
 
   double getLatitude() {
     return latitude;
+  }
+
+  double getRadius() {
+    return radius;
   }
 
   double toRadians(double degree) {
